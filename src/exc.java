@@ -1,9 +1,6 @@
-/**
- * 
- */
 
 /**
- * @author janlc
+ * @author Jan Cas
  *
  */
 public class exc {
@@ -13,8 +10,8 @@ public class exc {
 	 */
 	public static void main(String[] args) {
 		Hamming H = new Hamming();
-		H.sendXMSGs(10000, 0, 50);
-
+		H.sendXMSGs(5, 0, 3);
+		H.ReceiveMsg(0);
 	}
 
 }

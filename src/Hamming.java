@@ -192,7 +192,7 @@ public class Hamming {
 		try {
 			CsvReader id = new CsvReader("./HammingCode" + pty + ".csv");
 
-			// while it still has something ti read it reads and overrides
+			// while it still has something to read it reads and overrides
 			// the max
 			while (id.readRecord()) {
 				int Number = Integer.parseInt(id.get(0));
@@ -265,9 +265,8 @@ public class Hamming {
 
 			// checks if character at index i is equal to 1 or 0
 			if ((MSG.charAt(i) == '1') || (MSG.charAt(i) == '0')) {
-
 				// if yes add it to Message
-				Message.add((int) MSG.charAt(i));
+				Message.add(Character.getNumericValue(MSG.charAt(i)));
 			}
 		}
 		return Message;
@@ -330,5 +329,32 @@ public class Hamming {
 			}
 		}
 		return originalMsg;
+	}
+
+	// decodes the message
+	// returns ArrayList<Integer>
+	public ArrayList<Integer> Decode(ArrayList<Integer> Msg, int sending_party) {
+		Msg = CheckandCorrect(Msg, sending_party);
+		Msg = RemoveParityBit(Msg);
+		return Msg;
+	}
+
+	public void ReceiveMsg(int party) {
+		String pty = PartytoString(party);
+		ArrayList<Integer> M = new ArrayList<Integer>();
+		try {
+			CsvReader MSG = new CsvReader("./HammingCode" + pty + ".csv");
+
+			while (MSG.readRecord()) {
+				String Message = MSG.get(1);
+				M = StringtoArray(Message);
+				M = Decode(M, party);
+				System.out.println("the decoded Message equals " + M);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
