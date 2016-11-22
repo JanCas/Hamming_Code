@@ -277,7 +277,7 @@ public class Hamming {
 	public boolean CheckParityBit(ArrayList<Integer> Msg, int index, int sending_Party) {
 		boolean parity_bit_value = false;
 
-		ArrayList<Integer> Coverage = ParityBitCoverage(Msg.size(), index);
+		ArrayList<Integer> Coverage = ParityBitCoverage(Msg.size(), (index + 1));
 		int sum_bit_cover = 0;
 
 		// Adds all the Covered Bits up
