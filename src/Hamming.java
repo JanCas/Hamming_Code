@@ -5,6 +5,7 @@ import com.csvreader.*;
 
 public class Hamming {
 
+	// does absolutely nothing
 	public Hamming() {
 	}
 
@@ -111,7 +112,7 @@ public class Hamming {
 		for (int i = 0; i < length - 1; i++) {
 
 			// checks if a bit is power of 2
-			if (CheckPow2(i + 1) == true) {
+			if (CheckPow2(i + 1)) {
 
 				ArrayList<Integer> BitCover = ParityBitCoverage(EncodedMSG.size(), i + 1);
 
@@ -159,6 +160,7 @@ public class Hamming {
 
 			// checks if file already exists
 			if (!alreadyexists) {
+
 				// generates header
 				Writer.write("Number");
 				Writer.write("BitCode");
@@ -203,15 +205,17 @@ public class Hamming {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			max = 1;
+			max = 0;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			max = 1;
+			max = 0;
 		}
 		return max;
 	}
 
+	// changes a 1 to "odd" and a 0 to "even"
+	// returns String
 	public String PartytoString(int party) {
 		String P = null;
 		if (party == 0) {
@@ -224,24 +228,107 @@ public class Hamming {
 
 	// sends a amount of messages
 	// no return
-	public void sendAmount(int Amount, int party, int Length) {
+	public void sendXMSGs(int Amount, int party, int Length) {
 		int x = 0;
 		System.out.println("Party is " + PartytoString(party));
 		// generates amount messages and encodes and sends them
 		for (int i = 0; i < Amount; i++) {
 
+			// Generates random message with 1s and 0s
 			ArrayList<Integer> BitMSG = GenerateMsg(Length);
 			System.out.println(BitMSG);
 
+			// Encodes the message
 			BitMSG = Encode(BitMSG, party);
 			System.out.println("Encoded " + BitMSG);
 
+			// applies a random noise
 			BitMSG = Noise(BitMSG);
 			System.out.println("With 'Noise' " + BitMSG);
 
+			// finds the max count
 			x = MaxNumberInCsv(party);
+			// sends it to a CSV file
 			send(BitMSG, (x + 1), party);
 		}
 	}
 
+	// Puts a String into an ArrayList
+	// returns ArrayList<Integer>
+	public ArrayList<Integer> StringtoArray(String MSG) {
+
+		// creates a new ArrayList<Integer>
+		ArrayList<Integer> Message = new ArrayList<Integer>();
+
+		// goes through the whole String
+		for (int i = 0; i < MSG.length(); i++) {
+
+			// checks if character at index i is equal to 1 or 0
+			if ((MSG.charAt(i) == '1') || (MSG.charAt(i) == '0')) {
+
+				// if yes add it to Message
+				Message.add((int) MSG.charAt(i));
+			}
+		}
+		return Message;
+	}
+
+	// checks a parity bit in the received MSG
+	// returns boolean
+	public boolean CheckParityBit(ArrayList<Integer> Msg, int index, int sending_Party) {
+		boolean parity_bit_value = false;
+
+		ArrayList<Integer> Coverage = ParityBitCoverage(Msg.size(), index);
+		int sum_bit_cover = 0;
+
+		// Adds all the Covered Bits up
+		for (int i = 0; i < Coverage.size(); i++) {
+			sum_bit_cover += Msg.get(Coverage.get(i) - 1);
+		}
+		// checks if the parity bit fits toghether with the CalcParityBit
+		if (Msg.get(index) == CalcParityBit((sum_bit_cover + Msg.get(index)), sending_Party)) {
+			parity_bit_value = true;
+		} else {
+			parity_bit_value = false;
+		}
+
+		return parity_bit_value;
+	}
+
+	// Checks and Corrects the Message
+	// returns ArrayList<Integer>
+	public ArrayList<Integer> CheckandCorrect(ArrayList<Integer> Msg, int sending_party) {
+
+		int sum_error_bit = 0;
+		// goes through the whole message
+		for (int i = 0; i < Msg.size(); i++) {
+			// checks if a bit is a parity bit
+			if (CheckPow2(i + 1)) {
+				// checks if the bit is wrong
+				if (!CheckParityBit(Msg, i, sending_party)) {
+					// add all to wrong bits together
+					sum_error_bit += Msg.get(i);
+				}
+			}
+		}
+		// flips the wrong bit
+		Msg.set(sum_error_bit, (Msg.get(sum_error_bit) + 1) % 2);
+		return Msg;
+	}
+
+	// Removes all parity bits to revert it to the original Message
+	// returns ArrayList<Integer>
+	public ArrayList<Integer> RemoveParityBit(ArrayList<Integer> Msg) {
+
+		ArrayList<Integer> originalMsg = new ArrayList<Integer>();
+		// goes through the whole
+		for (int i = 0; i < Msg.size(); i++) {
+			// checks if i == parity bit
+			if (!CheckPow2(i + 1)) {
+				// adds it to a new ArrayList
+				originalMsg.add(Msg.get(i));
+			}
+		}
+		return originalMsg;
+	}
 }

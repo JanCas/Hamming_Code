@@ -13,8 +13,7 @@ public class exc {
 	 */
 	public static void main(String[] args) {
 		Hamming H = new Hamming();
-		H.sendAmount(5, 1, 4);
-		H.sendAmount(3, 0, 4);
+		H.sendXMSGs(10000, 0, 50);
 
 	}
 
