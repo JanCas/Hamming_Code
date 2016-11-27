@@ -9,9 +9,6 @@ public class exc {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Hamming H = new Hamming();
-		H.sendXMSGs(10, 1, 4);
-		H.ReceiveMsg(1);
+		Hamming H = new Hamming(3, 4, 0);
 	}
-
 }

@@ -6,7 +6,9 @@ import com.csvreader.*;
 public class Hamming {
 
 	// does absolutely nothing
-	public Hamming() {
+	public Hamming(int Number, int length, int party){
+		sendXMSGs(Number, party, length);
+		ReceiveMsg(party);
 	}
 
 	// Creates a message of X Length with 1 and 0;
@@ -132,13 +134,15 @@ public class Hamming {
 	// returns ArrayList<Integer>
 	public ArrayList<Integer> Noise(ArrayList<Integer> MSG) {
 		Random rand = new Random();
-		int random = rand.nextInt(8);
+		int random = rand.nextInt(MSG.size() + 1);
 
-		// if random == 7 do nothing
-		if (random == 7) {
+		// if random == MSG.size() do nothing
+		if (random == (MSG.size())) {
+			System.out.println("No corrupted bit");
 		} else {
 			// otherwise flip a random bit
 			MSG.set(random, (MSG.get(random) + 1) % 2);
+			System.out.println("Corrupted bit: " + random);
 		}
 		return MSG;
 	}
@@ -178,7 +182,6 @@ public class Hamming {
 
 			Writer.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
 		}
 	}
@@ -204,11 +207,9 @@ public class Hamming {
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			max = 0;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			max = 0;
 		}
 		return max;
@@ -230,22 +231,27 @@ public class Hamming {
 	// no return
 	public void sendXMSGs(int Amount, int party, int Length) {
 		int x = 0;
-		System.out.println("Party is " + PartytoString(party));
+		System.out.println(PartytoString(party) + " is sending message(s)");
+		System.out.println();
 		// generates amount messages and encodes and sends them
 		for (int i = 0; i < Amount; i++) {
 
 			// Generates random message with 1s and 0s
 			ArrayList<Integer> BitMSG = GenerateMsg(Length);
-			System.out.println(BitMSG);
+			System.out.println("Original Message: " + BitMSG);
 
 			// Encodes the message
 			BitMSG = Encode(BitMSG, party);
 			System.out.println("Encoded " + BitMSG);
 
+			// finds the max count
+			x = MaxNumberInCsv(party);
+
 			// applies a random noise
 			BitMSG = Noise(BitMSG);
-			System.out.println("With 'Noise' " + BitMSG);
-
+			System.out.print("Message ID: " + x);
+			System.out.println(" " + BitMSG + " sent.");
+			System.out.println();
 			// finds the max count
 			x = MaxNumberInCsv(party);
 			// sends it to a CSV file
@@ -306,12 +312,16 @@ public class Hamming {
 				// checks if the bit is wrong
 				if (!CheckParityBit(Msg, i, sending_party)) {
 					// add all to wrong bits together
-					sum_error_bit += Msg.get(i);
+					sum_error_bit += i + 1;
 				}
 			}
 		}
 		// flips the wrong bit
-		Msg.set(sum_error_bit, (Msg.get(sum_error_bit) + 1) % 2);
+		if (sum_error_bit > 0) {
+			System.out.println("Corrupted bit: " + sum_error_bit);
+			Msg.set((sum_error_bit - 1), (Msg.get(sum_error_bit - 1) + 1) % 2);
+			System.out.println("Corrected Message: " + Msg);
+		}
 		return Msg;
 	}
 
@@ -342,14 +352,23 @@ public class Hamming {
 	public void ReceiveMsg(int party) {
 		String pty = PartytoString(party);
 		ArrayList<Integer> M = new ArrayList<Integer>();
+		System.out.println();
+		System.out.println();
+		System.out.println(pty + " is receiving message(s)");
+		System.out.println();
 		try {
 			CsvReader MSG = new CsvReader("./HammingCode" + pty + ".csv");
 
 			while (MSG.readRecord()) {
 				String Message = MSG.get(1);
+				String ID = MSG.get(0);
 				M = StringtoArray(Message);
+				System.out.print("Message with ID: " + ID);
+				System.out.println("  " + M + " received");
 				M = Decode(M, party);
-				System.out.println("the decoded Message equals " + M);
+				System.out.print("Message with ID: " + ID);
+				System.out.println("  " + M + " decoded");
+				System.out.println();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
