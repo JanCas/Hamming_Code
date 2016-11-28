@@ -37,5 +37,8 @@ This Program takes in the length of the message to be sent, the party of the par
 14. _ReceiveMsg_: 1 parameter: party. receives all the messages of a certain party
 15. _ReoveParityBit_: 1 parameter: decoded message. removes all the parity bits
 16. _send_: 3 parameters: message, ID, party. Writes the message to a party with a certain ID into a csv party
-17. _sendXMSGs_: 3 parameters: Number of messagesto send, party, Length of message. Combines all the methods so that it genertes encodes and sends a message
-18. _StringtoArray_: 1 parameter: String. Onverts a String to an Array.
+17. _sendXMSGs_: 3 parameters: Number of messages to send, party, Length of message. Combines all the methods so that it generates encodes and sends a certain amount of messages.
+18. _StringtoArray_: 1 parameter: String. Converts a String to an Array.
+
+
+Source Wikipedia Haming Code: https://en.wikipedia.org/wiki/Hamming_code
