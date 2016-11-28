@@ -33,12 +33,12 @@ The program takes in the length of the message to be sent, the party (odd/even) 
 10. _MaxNumberInCsv_: 1 parameter: party. Checks for the Max ID in the csv file.
 11. _Noise_: 1 parameter: message. Flips a random bit.
 12. _ParityBitCoverage_: 2 parameters: length of the message, index of the parity bit. Finds the bits covered by the parity bit.
-13. _PartytoString_: 1 parameter: party. makes an integer into a String 1 = odd, 0 = even
-14. _ReceiveMsg_: 1 parameter: party. receives all the messages of a certain party
-15. _ReoveParityBit_: 1 parameter: decoded message. removes all the parity bits
+13. _PartytoString_: 1 parameter: party. Makes an integer into a String 1 = odd, 0 = even.
+14. _ReceiveMsg_: 1 parameter: party. Receives all the messages of a certain party.
+15. _RemoveParityBit_: 1 parameter: decoded message. Removes all the parity bits.
 16. _send_: 3 parameters: message, ID, party. Writes the message to a party with a certain ID into a csv party
-17. _sendXMSGs_: 3 parameters: Number of messages to send, party, Length of message. Combines all the methods so that it generates encodes and sends a certain amount of messages.
-18. _StringtoArray_: 1 parameter: String. Converts a String to an Array.
+17. _sendXMSGs_: 3 parameters: Number of messages to send, party, length of message. Combines all the methods so that it generates encodes and sends a certain number of messages.
+18. _StringtoArray_: 1 parameter: String. Converts a string message that was retreived from csv to an ArrayList.
 
 
 Source Wikipedia Haming Code: https://en.wikipedia.org/wiki/Hamming_code
