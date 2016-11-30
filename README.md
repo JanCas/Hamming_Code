@@ -42,3 +42,5 @@ The program takes in the length of the message to be sent, the party (odd/even) 
 
 
 Source Wikipedia Haming Code: https://en.wikipedia.org/wiki/Hamming_code
+
+Before you run the project you have to go to this website https://sourceforge.net/projects/javacsv/files/ download the file. After that go into eclipse press on the project with a right click >Properties>Java Build Path>Libraries>Add External JARs>javacsv2>javacsv.jar>open>ok this should fix all the errors.
