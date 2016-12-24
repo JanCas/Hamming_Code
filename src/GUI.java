@@ -3,6 +3,12 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+/**
+ * this part was added on by me for fun it is a loading bar
+ * @author janlc
+ *
+ */
+
 public class GUI extends JPanel{
 	
 	

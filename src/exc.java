@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 /**
- * @author Jan Cas
+ * @author Everyone
  * Executes the Hamming programm
+ * some of the gui was added on by @author janlc
  */
 
 public class exc {
@@ -14,7 +15,6 @@ public class exc {
 	
 	public static void graphics(){
 		
-		Hamming H = new Hamming();
 		String input = JOptionPane.showInputDialog("Enter how many messages you want to send");
 		int number = Integer.parseInt(input);
 		
