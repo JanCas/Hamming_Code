@@ -1,3 +1,10 @@
+/**
+ * @author Jan Cas
+ * this program computes a hamming code procedure. 
+ * it will be executed in the exc.java file
+ * https://github.com/JanCas/Hamming_Code
+ */
+
 import java.io.*;
 import java.util.*;
 
@@ -5,14 +12,25 @@ import com.csvreader.*;
 
 public class Hamming {
 
-	// does absolutely nothing
+	/**
+	 * Runs the needed methods
+	 * @param Number
+	 * @param length
+	 * @param party
+	 */
 	public Hamming(int Number, int length, int party){
+		assert Number > 0;
+		assert length > 0;
 		sendXMSGs(Number, party, length);
 		ReceiveMsg(party);
 	}
+	
+	public Hamming(){}
 
-	// Creates a message of X Length with 1 and 0;
-	// returns ArrayList<Integer>
+	/**
+	 * Creates a message with length of @param Length
+	 * @return ArrayList<Integer>
+	 */
 	public ArrayList<Integer> GenerateMsg(int Length) {
 		Random rand = new Random();
 		// Generates new ArrayList
@@ -26,25 +44,30 @@ public class Hamming {
 		return BitMsg;
 	}
 
-	// Checks if a number is a power of 2
-	// returns boolean
+	/**
+	 * 
+	 * checks if @param N is a power of 2
+	 * @return bollean
+	 */
 	public boolean CheckPow2(int N) {
 
 		// Calculations for checking
 		double X = Math.pow(2, (int) (Math.log10(N) / Math.log10(2)));
 
-		// assigns x to a boolean
+		// assigns x to a boolean (T/F)
 		boolean TF = (N == X);
 		return TF;
 	}
 
-	// Inserts the parity Bits to the Randomly generated Code before
-	// return ArrayList<Integer>
+	/**
+	 * Inserts 0 at the locations of the parity bits  in the ArrayList<Integer> @param B
+	 * @return ArrayList<Integer>
+	 */
 	public ArrayList<Integer> InsertParityBits(ArrayList<Integer> B) {
-		int len = B.size();
+		
 		// Checks a position in the code is power of two and if == true it adds
 		// a parity bit of Value )
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < B.size(); i++) {
 			if (CheckPow2(i + 1) == true) {
 				B.add(i, 0);
 			}
@@ -52,8 +75,11 @@ public class Hamming {
 		return B;
 	}
 
-	// Calculates how many bit a p certain parity bit covers
-	// return ArrayList<Integer>
+	/**
+	 * Calculate how many bits are getting covered by the bit at (@param parityBitPosition)
+	 * @param length
+	 * @return ArrayList<Integer>
+	 */
 	public ArrayList<Integer> ParityBitCoverage(int length, int parityBitPosition) {
 		ArrayList<Integer> Coverage = new ArrayList<Integer>();
 
@@ -68,8 +94,12 @@ public class Hamming {
 		return Coverage;
 	}
 
-	// Calculates the Value of a certain Parity Bit
-	// returns int
+	/**
+	 * calculates the value of a certain parity bit by using @param party and @param SumBits
+	 * @param SumBits
+	 * @param party
+	 * @return int
+	 */
 	public int CalcParityBit(int SumBits, int party) {
 
 		// sets initial Value to 0
@@ -103,15 +133,19 @@ public class Hamming {
 		return Value;
 	}
 
-	// Encodes a MSG with either even or odd
-	// returns ArrayList<Integer>
+	/**
+	 * Encodes a bitmsg 
+	 * @param bitMsg
+	 * @param party
+	 * @return ArrayList<Integer>
+	 */
 	public ArrayList<Integer> Encode(ArrayList<Integer> bitMsg, int party) {
 
 		ArrayList<Integer> EncodedMSG = InsertParityBits(bitMsg);
 		System.out.println("With Inserted Parity Bits " + EncodedMSG);
-		int length = EncodedMSG.size();
+		
 		// goes through the whole bit code
-		for (int i = 0; i < length - 1; i++) {
+		for (int i = 0; i < EncodedMSG.size() - 1; i++) {
 
 			// checks if a bit is power of 2
 			if (CheckPow2(i + 1)) {
@@ -130,8 +164,11 @@ public class Hamming {
 		return EncodedMSG;
 	}
 
-	// Creates a "Noise in the channel and flips a random bit
-	// returns ArrayList<Integer>
+	/**
+	 * flips one random bit or no bit at all
+	 * @param MSG
+	 * @return
+	 */
 	public ArrayList<Integer> Noise(ArrayList<Integer> MSG) {
 		Random rand = new Random();
 		int random = rand.nextInt(MSG.size() + 1);
@@ -147,8 +184,12 @@ public class Hamming {
 		return MSG;
 	}
 
-	// sends the bit MSG to a CSV file for odd MSGs
-	// no return
+	/**
+	 * sends a certain number of messages to a csv file according to its party
+	 * @param BitMSG
+	 * @param Number
+	 * @param party
+	 */
 	public void send(ArrayList<Integer> BitMSG, int Number, int party) {
 
 		String Snumber = Integer.toString(Number);
@@ -186,8 +227,11 @@ public class Hamming {
 		}
 	}
 
-	// gets the max Number in the Number collum
-	// returns int
+	/**
+	 * returns the id of the last message of a certain party sent
+	 * @param party
+	 * @return
+	 */
 	public int MaxNumberInCsv(int party) {
 
 		int max = 0;
@@ -215,8 +259,11 @@ public class Hamming {
 		return max;
 	}
 
-	// changes a 1 to "odd" and a 0 to "even"
-	// returns String
+	/**
+	 * changes a String into a party
+	 * @param party
+	 * @return
+	 */
 	public String PartytoString(int party) {
 		String P = null;
 		if (party == 0) {
@@ -227,15 +274,22 @@ public class Hamming {
 		return P;
 	}
 
-	// sends a amount of messages
-	// no return
-	public void sendXMSGs(int Amount, int party, int Length) {
+	/**
+	 * sends number of messages into a specified csv file
+	 * @param Amount
+	 * @param party
+	 * @param Length
+	 */
+	public void sendXMSGs(int Number, int party, int Length) {
+		GUI gui = new GUI(Number);
+		
 		int x = 0;
 		System.out.println(PartytoString(party) + " is sending message(s)");
 		System.out.println();
 		// generates amount messages and encodes and sends them
-		for (int i = 0; i < Amount; i++) {
-
+		for (int i = 0; i < Number; i++) {
+			
+			gui.display((int) ((i + 1)*100.0/Number));
 			// Generates random message with 1s and 0s
 			ArrayList<Integer> BitMSG = GenerateMsg(Length);
 			System.out.println("Original Message: " + BitMSG);
@@ -259,8 +313,11 @@ public class Hamming {
 		}
 	}
 
-	// Puts a String into an ArrayList
-	// returns ArrayList<Integer>
+	/**
+	 * puts a string into an arrayList
+	 * @param MSG
+	 * @return
+	 */
 	public ArrayList<Integer> StringtoArray(String MSG) {
 
 		// creates a new ArrayList<Integer>
@@ -278,8 +335,13 @@ public class Hamming {
 		return Message;
 	}
 
-	// checks a parity bit in the received MSG
-	// returns boolean
+	/**
+	 * checks if a parity bit is faulty
+	 * @param Msg
+	 * @param index
+	 * @param sending_Party
+	 * @return
+	 */
 	public boolean CheckParityBit(ArrayList<Integer> Msg, int index, int sending_Party) {
 		boolean parity_bit_value = false;
 
@@ -300,8 +362,12 @@ public class Hamming {
 		return parity_bit_value;
 	}
 
-	// Checks and Corrects the Message
-	// returns ArrayList<Integer>
+	/**
+	 * checks and corrects the message by checking every parity bit on faultyness
+	 * @param Msg
+	 * @param sending_party
+	 * @return
+	 */
 	public ArrayList<Integer> CheckandCorrect(ArrayList<Integer> Msg, int sending_party) {
 
 		int sum_error_bit = 0;
@@ -325,8 +391,11 @@ public class Hamming {
 		return Msg;
 	}
 
-	// Removes all parity bits to revert it to the original Message
-	// returns ArrayList<Integer>
+	/**
+	 * removes all the parity bits
+	 * @param Msg
+	 * @return
+	 */
 	public ArrayList<Integer> RemoveParityBit(ArrayList<Integer> Msg) {
 
 		ArrayList<Integer> originalMsg = new ArrayList<Integer>();
@@ -341,21 +410,33 @@ public class Hamming {
 		return originalMsg;
 	}
 
-	// decodes the message
-	// returns ArrayList<Integer>
+	/**
+	 * decodes the message
+	 * @param Msg
+	 * @param sending_party
+	 * @return
+	 */
 	public ArrayList<Integer> Decode(ArrayList<Integer> Msg, int sending_party) {
 		Msg = CheckandCorrect(Msg, sending_party);
 		Msg = RemoveParityBit(Msg);
 		return Msg;
 	}
 
+	/**
+	 * receives, decodes and prints the message
+	 * @param party
+	 */
 	public void ReceiveMsg(int party) {
+		int y = MaxNumberInCsv(party);
+		GUI g = new GUI(y);
 		String pty = PartytoString(party);
 		ArrayList<Integer> M = new ArrayList<Integer>();
 		System.out.println();
 		System.out.println();
 		System.out.println(pty + " is receiving message(s)");
 		System.out.println();
+		
+		//try catch to read the codes out of the csv file and decode it
 		try {
 			CsvReader MSG = new CsvReader("./HammingCode" + pty + ".csv");
 
@@ -369,11 +450,26 @@ public class Hamming {
 				System.out.print("Message with ID: " + ID);
 				System.out.println("  " + M + " decoded");
 				System.out.println();
+				
+				int x = 1;
+				g.display((int) ((x*100.0)/y));
+				x++;
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getReps(int CReps,int parity){
+		CReps += MaxNumberInCsv(parity);
+		return CReps;
 	}
 }
