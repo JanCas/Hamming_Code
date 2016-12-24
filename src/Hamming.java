@@ -488,7 +488,6 @@ public class Hamming {
 	 * in case the file does not exists it prints the Strack Trace
 	 */
 	public void ReceiveMsg(int party) {
-		int y = MaxNumberInCsv(party);
 		String pty = PartytoString(party);
 		ArrayList<Integer> M = new ArrayList<Integer>();
 		System.out.println();
