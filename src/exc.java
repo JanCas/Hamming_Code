@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 /**
  * @author Everyone
  * Executes the Hamming programm
@@ -25,6 +23,7 @@ public class exc {
 		int parity = Integer.parseInt(input3);
 		
 		
+		@SuppressWarnings("unused")
 		Hamming Hamming = new Hamming(number, length, parity);
 		}
 }

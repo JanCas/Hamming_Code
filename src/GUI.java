@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
  *
  */
 
+@SuppressWarnings("serial")
 public class GUI extends JPanel{
 	
 	
