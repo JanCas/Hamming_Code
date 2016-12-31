@@ -31,6 +31,10 @@ public class Hamming {
 		ReceiveMsg(party);
 	}
 	
+	/**
+	 * @author Jan Cas
+	 * does absolutely nothing at all
+	 */
 	public Hamming(){}
 
 	/**
@@ -317,7 +321,7 @@ public class Hamming {
 	 * and then sends it
 	 */
 	public void sendXMSGs(int Number, int party, int Length) {
-		GUI gui = new GUI(Number);
+		ProgressBar progressBar = new ProgressBar();
 		
 		int x = 0;
 		System.out.println(PartytoString(party) + " is sending message(s)");
@@ -325,7 +329,7 @@ public class Hamming {
 		// generates amount messages and encodes and sends them
 		for (int i = 0; i < Number; i++) {
 			
-			gui.display((int) ((i + 1)*100.0/Number));
+			progressBar.display((int) ((i + 1)*100.0/Number));
 			// Generates random message with 1s and 0s
 			ArrayList<Integer> BitMSG = GenerateMsg(Length);
 			System.out.println("Original Message: " + BitMSG);

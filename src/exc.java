@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import javax.swing.*;
+=======
+>>>>>>> origin/master
 /**
  * @author Everyone
  * Executes the Hamming programm
@@ -8,8 +11,10 @@ import javax.swing.*;
 public class exc {
 	
 	public static void main(String[] args){
-		graphics();
+		@SuppressWarnings("unused")
+		GUI g = new GUI();
 	}
+<<<<<<< HEAD
 	
 	public static void graphics(){
 		
@@ -26,4 +31,6 @@ public class exc {
 		@SuppressWarnings("unused")
 		Hamming Hamming = new Hamming(number, length, parity);
 		}
+=======
+>>>>>>> origin/master
 }

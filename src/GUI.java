@@ -1,14 +1,9 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
+import java.awt.event.*;
+import javax.swing.*;
 
-/**
- * this part was added on by me for fun it is a loading bar
- * @author janlc
- *
- */
+public class GUI extends ProgressBar{
 
+<<<<<<< HEAD
 @SuppressWarnings("serial")
 public class GUI extends JPanel{
 	
@@ -24,34 +19,58 @@ public class GUI extends JPanel{
 		pbar.setMinimum(MIN);
 		pbar.setMaximum(MAX);
 		add(pbar);
+=======
+	public GUI(){
+		JFrame frame = new JFrame();
+>>>>>>> origin/master
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(pbar);
-		frame.pack();
+		final int FIELD_WIDTH = 10;
 		
-
-	}
-	public void display(int d){
-
+		JLabel NumberLabel = new JLabel("Messages send");
+		final JTextField NumberField = new JTextField(FIELD_WIDTH);
+		NumberField.setText("" + 100);
 		
-		frame.setVisible(true);
-		pbar.setStringPainted(true);
+		JLabel LengthLabel = new JLabel("Length of Message");
+		final JTextField LengthField = new JTextField(FIELD_WIDTH);
+		LengthField.setText("" + 4);
 		
-		System.out.println("this is" + d);
-		assert d <= MAX;
+		JLabel ParityLabel = new JLabel("Parity Value");
+		final JTextField ParityField = new JTextField(FIELD_WIDTH);
+		ParityField.setText("1 or 0");
 		
-		try{
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run(){
-				pbar.setValue(d);
-				pbar.repaint();
-				frame.repaint();
+		JButton SB = new JButton("Start");
+		
+		JPanel panel = new JPanel();
+		panel.add(NumberLabel);
+		panel.add(NumberField);
+		panel.add(LengthLabel);
+		panel.add(LengthField);
+		panel.add(ParityLabel);
+		panel.add(ParityField);
+		panel.add(SB);
+		panel.add(pbar);
+		frame.add(panel);
+		
+		class Listener implements ActionListener{
+			public void actionPerformed(ActionEvent event){
+				
+				int number = Integer.parseInt(NumberField.getText());
+				int length = Integer.parseInt(LengthField.getText());
+				int parity = Integer.parseInt(ParityField.getText());
+				
+				@SuppressWarnings("unused")
+				Hamming H = new Hamming(number, length, parity);
+				
 			}
-			});
-		java.lang.Thread.sleep(100);
-	      } catch (InterruptedException e) {
-	        ;
 		}
 		
+		ActionListener listen = new Listener();
+		SB.addActionListener(listen);
+		
+		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
+	private static final int FRAME_WIDTH = 300;
+	private static final int FRAME_HEIGHT = 150;
 }
