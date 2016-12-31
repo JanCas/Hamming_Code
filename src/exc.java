@@ -1,4 +1,3 @@
-import javax.swing.*;
 /**
  * @author Everyone
  * Executes the Hamming programm
@@ -8,22 +7,7 @@ import javax.swing.*;
 public class exc {
 	
 	public static void main(String[] args){
-		graphics();
-	}
-	
-	public static void graphics(){
-		
-		String input = JOptionPane.showInputDialog("Enter how many messages you want to send");
-		int number = Integer.parseInt(input);
-		
-		String input2 = JOptionPane.showInputDialog("Enter the length of a message");
-		int length = Integer.parseInt(input2);
-		
-		String input3 = JOptionPane.showInputDialog("Enter its parity(1=odd, 0=even)");
-		int parity = Integer.parseInt(input3);
-		
-		
 		@SuppressWarnings("unused")
-		Hamming Hamming = new Hamming(number, length, parity);
-		}
+		GUI g = new GUI();
+	}
 }
