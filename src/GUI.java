@@ -1,28 +1,16 @@
 import java.awt.event.*;
 import javax.swing.*;
 
-public class GUI extends ProgressBar{
 
-<<<<<<< HEAD
+
+
 @SuppressWarnings("serial")
 public class GUI extends JPanel{
 	
-	
-	static final int MIN = 0;
-	static final int MAX = 100;
-	JProgressBar pbar = new JProgressBar();
-	JFrame frame = new JFrame("ProgressBar Send");
-	
-	
-	public GUI(int N){
-		
-		pbar.setMinimum(MIN);
-		pbar.setMaximum(MAX);
-		add(pbar);
-=======
+
 	public GUI(){
 		JFrame frame = new JFrame();
->>>>>>> origin/master
+
 		
 		final int FIELD_WIDTH = 10;
 		
@@ -48,7 +36,6 @@ public class GUI extends JPanel{
 		panel.add(ParityLabel);
 		panel.add(ParityField);
 		panel.add(SB);
-		panel.add(pbar);
 		frame.add(panel);
 		
 		class Listener implements ActionListener{
