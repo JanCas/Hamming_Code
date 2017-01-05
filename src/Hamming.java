@@ -30,12 +30,6 @@ public class Hamming {
 		sendXMSGs(Number, party, length);
 		ReceiveMsg(party);
 	}
-	
-	/**
-	 * @author Jan Cas
-	 * does absolutely nothing at all
-	 */
-	public Hamming(){}
 
 	/**
 	 * @author Arjun
@@ -216,9 +210,9 @@ public class Hamming {
 	 * generates a csv file -> writes it into the location where the project is as well.
 	 * it is a library downloaded from the internet and used their exaple code.
 	 */
-	public void send(ArrayList<Integer> BitMSG, int Number, int party) {
+	public void send(ArrayList<Integer> BitMSG, int ID, int party) {
 
-		String Snumber = Integer.toString(Number);
+		String Sid = Integer.toString(ID);
 		String pty = PartytoString(party);
 		try {
 			// specifies bit file
@@ -243,7 +237,7 @@ public class Hamming {
 			String BitCode = BitMSG.toString();
 
 			// writes MSG #1
-			Writer.write(Snumber);
+			Writer.write(Sid);
 			Writer.write(BitCode);
 			Writer.endRecord();
 
