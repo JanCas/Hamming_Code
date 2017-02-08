@@ -15,7 +15,7 @@ public class exc {
 	}
 
 	
-	public static void graphics(){
+/*	public static void graphics(){
 		
 		String input = JOptionPane.showInputDialog("Enter how many messages you want to send");
 		int number = Integer.parseInt(input);
@@ -30,4 +30,5 @@ public class exc {
 		@SuppressWarnings("unused")
 		Hamming Hamming = new Hamming(number, length, parity);
 		}
+*/
 }

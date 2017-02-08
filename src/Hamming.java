@@ -1,3 +1,4 @@
+
 /**
  * @author Jan Cas
  * @author Amer Islam
@@ -18,13 +19,12 @@ import com.csvreader.*;
 public class Hamming {
 
 	/**
-	 * @author Jan Cas
-	 * Runs the needed methods
+	 * @author Jan Cas Runs the needed methods
 	 * @param Number
 	 * @param length
 	 * @param party
 	 */
-	public Hamming(int Number, int length, int party){
+	public Hamming(int Number, int length, int party) {
 		assert Number > 0;
 		assert length > 0;
 		sendXMSGs(Number, party, length);
@@ -32,11 +32,11 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Arjun
-	 * Creates a message with length of @param Length
+	 * @author Arjun Creates a message with length of @param Length
 	 * @return ArrayList<Integer>
 	 */
 	public ArrayList<Integer> GenerateMsg(int Length) {
+		assert Length > 0;
 		Random rand = new Random();
 		// Generates new ArrayList
 		ArrayList<Integer> BitMsg = new ArrayList<Integer>();
@@ -50,11 +50,11 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Jan, Max
-	 * checks if @param N is a power of 2
+	 * @author Jan, Max checks if @param N is a power of 2
 	 * @return bollean
 	 */
 	public boolean CheckPow2(int N) {
+		assert N >= 0;
 
 		// Calculations for checking
 		double X = Math.pow(2, (int) (Math.log10(N) / Math.log10(2)));
@@ -65,12 +65,12 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Daniel, Yair
-	 * Inserts 0 at the locations of the parity bits  in the ArrayList<Integer> @param B
+	 * @author Daniel, Yair Inserts 0 at the locations of the parity bits in the
+	 *         ArrayList<Integer> @param B
 	 * @return ArrayList<Integer>
 	 */
 	public ArrayList<Integer> InsertParityBits(ArrayList<Integer> B) {
-		
+		assert B != null;
 		// Checks a position in the code is power of two and if == true it adds
 		// a parity bit of Value )
 		for (int i = 0; i < B.size(); i++) {
@@ -82,14 +82,16 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Jan, Max
-	 * Calculate how many bits are getting covered by the bit at (@param parityBitPosition)
+	 * @author Jan, Max Calculate how many bits are getting covered by the bit
+	 *         at (@param parityBitPosition)
 	 * @param length
 	 * @return ArrayList<Integer>
 	 */
 	public ArrayList<Integer> ParityBitCoverage(int length, int parityBitPosition) {
-		ArrayList<Integer> Coverage = new ArrayList<Integer>();
+		assert length >= 0;
+		assert parityBitPosition >= 0;
 
+		ArrayList<Integer> Coverage = new ArrayList<Integer>();
 		// goes through the whole code
 		for (int i = 0; i <= length; i++) {
 			// checks if the parity and i are bitwise AND bigger then 1 if yes
@@ -102,16 +104,18 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Amer, Arjun
-	 * calculates the value of a certain parity bit by using @param party and @param SumBits
+	 * @author Amer, Arjun calculates the value of a certain parity bit by
+	 *         using @param party and @param SumBits
 	 * @param SumBits
 	 * @param party
 	 * @return int
 	 * 
-	 * it checks if the party and the number are the same or diffrent
-	 * if diffrent value = 0; other value = 1
+	 *         it checks if the party and the number are the same or diffrent if
+	 *         diffrent value = 0; other value = 1
 	 */
 	public int CalcParityBit(int SumBits, int party) {
+		assert SumBits > 0;
+		assert ((party == 0) || (party == 1));
 
 		// sets initial Value to 0
 		int Value = 0;
@@ -145,21 +149,22 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Everyone
-	 * Encodes a bitmsg 
+	 * @author Everyone Encodes a bitmsg
 	 * @param bitMsg
 	 * @param party
 	 * @return ArrayList<Integer>
 	 * 
-	 * loop1 -> goes throught the whole message, enters loop2 -> checks if the index it is at rn is power of 2
-	 * checks which parity bits that bit covers loop -> adds the value of all those parity bits. back to loop1 -> 
-	 * flips the parity bit to the right value.
+	 *         loop1 -> goes throught the whole message, enters loop2 -> checks
+	 *         if the index it is at rn is power of 2 checks which parity bits
+	 *         that bit covers loop -> adds the value of all those parity bits.
+	 *         back to loop1 -> flips the parity bit to the right value.
 	 */
 	public ArrayList<Integer> Encode(ArrayList<Integer> bitMsg, int party) {
-
+		assert bitMsg != null;
+		assert ((party == 0) || (party == 1));
 		ArrayList<Integer> EncodedMSG = InsertParityBits(bitMsg);
 		System.out.println("With Inserted Parity Bits " + EncodedMSG);
-		
+
 		// goes through the whole bit code
 		for (int i = 0; i < EncodedMSG.size() - 1; i++) {
 
@@ -181,12 +186,12 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Yair
-	 * flips one random bit or no bit at all
+	 * @author Yair flips one random bit or no bit at all
 	 * @param MSG
 	 * @return MSG
 	 */
 	public ArrayList<Integer> Noise(ArrayList<Integer> MSG) {
+		assert MSG != null;
 		Random rand = new Random();
 		int random = rand.nextInt(MSG.size() + 1);
 
@@ -202,16 +207,19 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Daniel, Arjun, Amer, Yair
-	 * sends a certain number of messages to a csv file according to its party
+	 * @author Daniel, Arjun, Amer, Yair sends a certain number of messages to a
+	 *         csv file according to its party
 	 * @param BitMSG
 	 * @param Number
 	 * @param party
-	 * generates a csv file -> writes it into the location where the project is as well.
-	 * it is a library downloaded from the internet and used their exaple code.
+	 *            generates a csv file -> writes it into the location where the
+	 *            project is as well. it is a library downloaded from the
+	 *            internet and used their exaple code.
 	 */
 	public void send(ArrayList<Integer> BitMSG, int ID, int party) {
-
+		assert BitMSG != null;
+		assert ID >= 0;
+		assert ((party == 0) || (party == 1));
 		String Sid = Integer.toString(ID);
 		String pty = PartytoString(party);
 		try {
@@ -248,16 +256,15 @@ public class Hamming {
 	}
 
 	/**
-	 * @author jan
-	 * returns the id of the last message of a certain party sent
+	 * @author jan returns the id of the last message of a certain party sent
 	 * @param party
-	 * @return MaxNuber
-	 * it makes the initial max zero and then overwrites it every time it finds a bigger number.
-	 * so every time it is called 
-	 * it uses a try catch -> so in case the file does not exist yet the catch statement is to make maxNumber 0.
+	 * @return MaxNuber it makes the initial max zero and then overwrites it
+	 *         every time it finds a bigger number. so every time it is called
+	 *         it uses a try catch -> so in case the file does not exist yet the
+	 *         catch statement is to make maxNumber 0.
 	 */
 	public int MaxNumberInCsv(int party) {
-
+		assert ((party == 0) || (party == 1));
 		int max = 0;
 		String pty = PartytoString(party);
 		try {
@@ -284,11 +291,9 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Jan
-	 * changes a String into a party
+	 * @author Jan changes a String into a party
 	 * @param party
-	 * @return String
-	 * no big deal just turns a int into a string
+	 * @return String no big deal just turns a int into a string
 	 */
 	public String PartytoString(int party) {
 		String P = null;
@@ -301,29 +306,25 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Everyone
-	 * sends number of messages into a specified csv file
+	 * @author Everyone sends number of messages into a specified csv file
 	 * @param Amount
 	 * @param party
 	 * @param Length
-	 * first it says which party is sending messages
-	 * this method goes through a for loop and stops when it sends the amount of messages wanted by the user.
-	 * it makes a random message with the specified length
-	 * Encodes that message
-	 * affects noise on it
-	 * gets the max number in the csv
-	 * and then sends it
+	 *            first it says which party is sending messages this method goes
+	 *            through a for loop and stops when it sends the amount of
+	 *            messages wanted by the user. it makes a random message with
+	 *            the specified length Encodes that message affects noise on it
+	 *            gets the max number in the csv and then sends it
 	 */
 	public void sendXMSGs(int Number, int party, int Length) {
+
 		ProgressBar progressBar = new ProgressBar();
-		
 		int x = 0;
 		System.out.println(PartytoString(party) + " is sending message(s)");
 		System.out.println();
 		// generates amount messages and encodes and sends them
 		for (int i = 0; i < Number; i++) {
-			
-			progressBar.display((int) ((i + 1)*100.0/Number));
+
 			// Generates random message with 1s and 0s
 			ArrayList<Integer> BitMSG = GenerateMsg(Length);
 			System.out.println("Original Message: " + BitMSG);
@@ -341,16 +342,16 @@ public class Hamming {
 			x = MaxNumberInCsv(party);
 			// sends it to a CSV file
 			send(BitMSG, (x + 1), party);
+			progressBar.display((int) ((i + 1) * 100.0 / Number));
 		}
 	}
 
 	/**
-	 * @author Yair, Max
-	 * puts a string into an arrayList
+	 * @author Yair, Max puts a string into an arrayList
 	 * @param MSG
-	 * @return
-	 * turns a string into an array which will be used so that when we read the csv file
-	 * it reads a value as a string but we need it as an arrayList
+	 * @return turns a string into an array which will be used so that when we
+	 *         read the csv file it reads a value as a string but we need it as
+	 *         an arrayList
 	 */
 	public ArrayList<Integer> StringtoArray(String MSG) {
 
@@ -370,15 +371,14 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Jan, Max
-	 * checks if a parity bit is faulty
+	 * @author Jan, Max checks if a parity bit is faulty
 	 * @param Msg
 	 * @param index
 	 * @param sending_Party
-	 * @return
-	 * checks if a parity bit is its right value
-	 * it adds all the values of all the coverage togehter
-	 * and then checks if the value of the current parity bit is equal to the value of the parity bit that it should be.
+	 * @return checks if a parity bit is its right value it adds all the values
+	 *         of all the coverage togehter and then checks if the value of the
+	 *         current parity bit is equal to the value of the parity bit that
+	 *         it should be.
 	 */
 	public boolean CheckParityBit(ArrayList<Integer> Msg, int index, int sending_Party) {
 		boolean parity_bit_value = false;
@@ -401,16 +401,15 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Arjun, Amer, Jan
-	 * checks and corrects the message by checking every parity bit on faultyness
+	 * @author Arjun, Amer, Jan checks and corrects the message by checking
+	 *         every parity bit on faultyness
 	 * @param Msg
 	 * @param sending_party
-	 * @return
-	 * the value of every wrong parity bit index reveals the error bit.
-	 * loop! -> goes through the whole message loop2 -> checks if bit at index i is parity bit.
-	 * loop3 -> checks if the selected parity bit is faluty or not. 
-	 * adds all the faulty bits together
-	 * the result is the faulty bit
+	 * @return the value of every wrong parity bit index reveals the error bit.
+	 *         loop! -> goes through the whole message loop2 -> checks if bit at
+	 *         index i is parity bit. loop3 -> checks if the selected parity bit
+	 *         is faluty or not. adds all the faulty bits together the result is
+	 *         the faulty bit
 	 */
 	public ArrayList<Integer> CheckandCorrect(ArrayList<Integer> Msg, int sending_party) {
 
@@ -436,11 +435,9 @@ public class Hamming {
 	}
 
 	/**
-	 * @author jan
-	 * removes all the parity bits
+	 * @author jan removes all the parity bits
 	 * @param Msg
-	 * @return
-	 * just removes all the parity bits, reveiling the original message
+	 * @return just removes all the parity bits, reveiling the original message
 	 */
 	public ArrayList<Integer> RemoveParityBit(ArrayList<Integer> Msg) {
 
@@ -457,12 +454,10 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Everyone
-	 * decodes the message
+	 * @author Everyone decodes the message
 	 * @param Msg
 	 * @param sending_party
-	 * @return
-	 * Checks and corrects the message & then removes the parity bits
+	 * @return Checks and corrects the message & then removes the parity bits
 	 */
 	public ArrayList<Integer> Decode(ArrayList<Integer> Msg, int sending_party) {
 		Msg = CheckandCorrect(Msg, sending_party);
@@ -471,19 +466,16 @@ public class Hamming {
 	}
 
 	/**
-	 * @author Everyone
-	 * receives, decodes and prints the message
+	 * @author Everyone receives, decodes and prints the message
 	 * @param party
-	 * this method first prints that it is receiving messages
-	 * then it goes in to a try catch
-	 * first checks if the file existst
-	 * then goes into a while loop which read the csv until there is nothing more to read
-	 * 1st reads the message 
-	 * 2nd reads its ID
-	 * makes an Array out of the message read
-	 * then Decodes it -> checks for any wrong parity bits and corects them
-	 * after that stripping the message of its parity bits
-	 * in case the file does not exists it prints the Strack Trace
+	 *            this method first prints that it is receiving messages then it
+	 *            goes in to a try catch first checks if the file existst then
+	 *            goes into a while loop which read the csv until there is
+	 *            nothing more to read 1st reads the message 2nd reads its ID
+	 *            makes an Array out of the message read then Decodes it ->
+	 *            checks for any wrong parity bits and corects them after that
+	 *            stripping the message of its parity bits in case the file does
+	 *            not exists it prints the Strack Trace
 	 */
 	public void ReceiveMsg(int party) {
 		String pty = PartytoString(party);
@@ -492,8 +484,8 @@ public class Hamming {
 		System.out.println();
 		System.out.println(pty + " is receiving message(s)");
 		System.out.println();
-		
-		//try catch to read the codes out of the csv file and decode it
+
+		// try catch to read the codes out of the csv file and decode it
 		try {
 			CsvReader MSG = new CsvReader("./HammingCode" + pty + ".csv");
 
@@ -507,7 +499,7 @@ public class Hamming {
 				System.out.print("Message with ID: " + ID);
 				System.out.println("  " + M + " decoded");
 				System.out.println();
-				
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

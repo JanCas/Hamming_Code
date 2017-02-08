@@ -3,37 +3,38 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+
 public class ProgressBar extends JPanel{
 	
 	
 	static final int MIN = 0;
 	static final int MAX = 100;
 	JProgressBar pbar = new JProgressBar();
+	JFrame frame = new JFrame();
 	
 	public ProgressBar(){
 		
 		pbar.setMinimum(MIN);
 		pbar.setMaximum(MAX);
+		pbar.setStringPainted(true);
 		add(pbar);
-		
+		frame.add(pbar);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(600, 300);
+		frame.setVisible(true);
 
 	}
 	public void display(int d){
-		pbar.setStringPainted(true);
 		
 		System.out.println("this is" + d);
 		
-		try{
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run(){
-				pbar.setValue(d);
-				pbar.repaint();
-			}
-			});
-		java.lang.Thread.sleep(100);
-	      } catch (InterruptedException e) {
-	        ;
-		}
+		    public void run() {
+		    	System.out.println("Going in");
+		      pbar.setValue(d);
+		    }
+		  });
+	      
 		
 	}
 }

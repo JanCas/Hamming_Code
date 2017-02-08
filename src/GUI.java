@@ -1,9 +1,6 @@
 import java.awt.event.*;
 import javax.swing.*;
 
-
-
-
 @SuppressWarnings("serial")
 public class GUI extends JPanel{
 	
@@ -12,7 +9,7 @@ public class GUI extends JPanel{
 		JFrame frame = new JFrame();
 
 		
-		final int FIELD_WIDTH = 10;
+		final int FIELD_WIDTH = 8;
 		
 		JLabel NumberLabel = new JLabel("Messages send");
 		final JTextField NumberField = new JTextField(FIELD_WIDTH);
@@ -24,7 +21,7 @@ public class GUI extends JPanel{
 		
 		JLabel ParityLabel = new JLabel("Parity Value");
 		final JTextField ParityField = new JTextField(FIELD_WIDTH);
-		ParityField.setText("1 or 0");
+		ParityField.setText("1");
 		
 		JButton SB = new JButton("Start");
 		
