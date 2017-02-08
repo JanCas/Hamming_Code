@@ -3,7 +3,11 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+<<<<<<< HEAD
 
+=======
+@SuppressWarnings("serial")
+>>>>>>> origin/master
 public class ProgressBar extends JPanel{
 	
 	
@@ -18,11 +22,19 @@ public class ProgressBar extends JPanel{
 		pbar.setMaximum(MAX);
 		pbar.setStringPainted(true);
 		add(pbar);
+<<<<<<< HEAD
 		frame.add(pbar);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 300);
 		frame.setVisible(true);
 
+=======
+		frame.setSize(800, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(pbar);
+		frame.setLocation(400, 400);
+		frame.setVisible(true);
+>>>>>>> origin/master
 	}
 	public void display(int d){
 		
